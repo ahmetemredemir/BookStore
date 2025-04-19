@@ -8,6 +8,14 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/BookStore.styles.css" asp-append-version="true" />
+
+    <style>
+        .dropdown:hover > .dropdown-menu {
+            display: block;
+            margin-top: 0;
+        }
+    </style>
+
 </head>
 <body>
     <header>
@@ -23,16 +31,33 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Anasayfa</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Index">Kategoriler</a>
+
+                        @* !!!Li olan maddeleri kaldırıp buraya bs5 dropdown menü kodunu yapıştırmayı unutma!!!*@
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Categories
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="categoryDropdown">
+                                <li class="dropdown-item text-dark text-decoration-none">
+                                    <a asp-controller="Categories" asp-action="Index" id="categoryDropdown">Category Index Page</a>
+                                </li>
+                                @if (ViewData["Categories"] != null)
+                                {
+                                    var categories = ViewData["Categories"] as List<BookStore.Models.Category>;
+                                    foreach (var category in categories)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item text-dark" href="/Categories/Details/@category.Id">
+                                                @category.Name
+                                            </a>
+                                        </li>
+                                    }
+                                }
+                            </ul>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="1">Bilgisayar</a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Categories" asp-action="Details" asp-route-id="2">Edebiyat</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Customers" asp-action="Index">Customers</a>
                         </li>
 
                         <li class="nav-item">
